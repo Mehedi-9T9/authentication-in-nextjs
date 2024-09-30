@@ -9,8 +9,8 @@ const RejisterPage = () => {
         event.preventDefault()
         console.log('form 9', userData);
 
-        const data = axios.post("/api/rejister", userData)
-        console.log("from line 13", data);
+        const data = await axios.post("/api/rejister", userData)
+        console.log("from line 13", data.data);
 
     }
     return (

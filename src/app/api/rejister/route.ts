@@ -1,10 +1,21 @@
+import { connectDB } from "@/database/connectdb";
 import { NextRequest, NextResponse } from "next/server";
+import User from "@/Models/userScema";
+import bcryptjs from "bcryptjs"
+
 
 export const POST = async (request: NextRequest) => {
     try {
+        await connectDB()
         const userInfo = await request.json()
-        console.log('server line 6', userInfo);
-        return NextResponse.json(userInfo)
+        const { name, email, password } = userInfo
+        const newPass = await bcryptjs.hash(password, 10)
+        const newUser = new User({ name, email, password: newPass })
+        const result = await newUser.save()
+        return NextResponse.json(result)
+
+
+
 
 
     } catch (error: any) {
@@ -12,6 +23,8 @@ export const POST = async (request: NextRequest) => {
 
     }
 }
+
+//checking parpass
 
 export const GET = async (request: NextRequest) => {
     try {
