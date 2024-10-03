@@ -1,9 +1,12 @@
 'use client'
 import axios from 'axios';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
 
 const RejisterPage = () => {
     const [userData, setUserData] = React.useState({ name: "", email: "", password: "" })
+    const router = useRouter();
+    const [isLogin, setLogin] = React.useState(false)
 
     const handleRejister = async (event: React.FormEvent<HTMLElement>) => {
         event.preventDefault()
@@ -11,8 +14,17 @@ const RejisterPage = () => {
 
         const data = await axios.post("/api/rejister", userData)
         console.log("from line 13", data.data);
+        if (!data.data.message) {
+            setLogin(true);
+
+        } else { setLogin(false); }
 
     }
+    useEffect(() => {
+        if (isLogin) {
+            router.push('/')
+        }
+    }, [isLogin, router])
     return (
         <div className="hero bg-base-200 min-h-screen">
             <div className="hero-content flex-col lg:flex-row-reverse ">

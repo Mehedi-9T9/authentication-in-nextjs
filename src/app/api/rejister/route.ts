@@ -12,7 +12,7 @@ export const POST = async (request: NextRequest) => {
         const newPass = await bcryptjs.hash(password, 10)
         const newUser = new User({ name, email, password: newPass })
         const result = await newUser.save()
-        return NextResponse.json(result)
+        return NextResponse.json(result, { status: 200 })
 
 
 

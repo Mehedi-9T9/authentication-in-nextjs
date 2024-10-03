@@ -19,7 +19,7 @@ export const connectDB = async () => {
         // process.exit(1)
 
     } catch (error: any) {
-        console.log("database connect fail");
+        console.log("database connect fail", error.message);
 
     }
 }
